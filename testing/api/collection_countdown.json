@@ -1,0 +1,293 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Countdown",
+    "dateExported": "2023-08-27T19:06:22.831Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "633514d8-5d39-4bd4-b0a6-80f5a1275e3b",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "All Clocks",
+            "url": "{{protocal}}://{{host}}:{{port}}/clocks",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-08-27T12:37:49.277Z",
+            "modified": "2023-08-27T19:04:38.539Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "3222468e-9bc6-4c54-b987-fe7463a50773",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Create Clock",
+            "url": "{{protocal}}://{{host}}:{{port}}/clocks",
+            "method": "POST",
+            "sortNum": 15000,
+            "created": "2023-08-27T12:43:53.605Z",
+            "modified": "2023-08-27T19:04:45.831Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"endTime\": 1,\n  \"description\": \"Hello World\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "8d316331-8014-453a-bdbf-67ffef431c82",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Get Clock By Id",
+            "url": "http://localhost:3000/clocks/{clockId}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-08-27T12:38:36.507Z",
+            "modified": "2023-08-27T15:30:33.048Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "c88181c3-ba17-4fb9-b10e-59e5e04bf26d",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Delete Clock By ID",
+            "url": "http://localhost:3000/clocks/{clockIdToDelete}",
+            "method": "DELETE",
+            "sortNum": 40000,
+            "created": "2023-08-27T12:48:57.841Z",
+            "modified": "2023-08-27T15:06:00.304Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockIdToDelete",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "5777a9f7-6c43-47b0-bfa4-0d5ba0c76f76",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Authenticate Clock",
+            "url": "http://localhost:3000/auth/clocks/{clockId}",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2023-08-27T12:56:02.064Z",
+            "modified": "2023-08-27T15:00:46.492Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"password\": \"{{password}}\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "dba5f6d5-5a87-4573-a4e0-75e3d076a6c1",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Check if Clock Has Password",
+            "url": "http://localhost:3000/auth/clocks/{clockId}/has-password",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-08-27T13:07:29.113Z",
+            "modified": "2023-08-27T13:20:10.856Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "11b8152a-b6a1-4105-a33c-ce41ee77f420",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Verify Clock Token",
+            "url": "http://localhost:3000/auth/verify-clock-token",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2023-08-27T13:20:32.042Z",
+            "modified": "2023-08-27T13:22:36.859Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"token\": \"{{token}}\",\n  \"clockId\": \"{{clockID}}\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "fe09cab6-8914-4a49-b947-a0ecdf40255a",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Get Activity Log",
+            "url": "http://localhost:3000/activity/clocks/{clockId}",
+            "method": "GET",
+            "sortNum": 100000,
+            "created": "2023-08-27T13:23:21.742Z",
+            "modified": "2023-08-27T13:23:40.754Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "0de362c3-f7b8-40f1-a0ab-0dd8a864683d",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Get Time Activities History",
+            "url": "http://localhost:3000/activity/clocks/{clockId}/history",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2023-08-27T13:24:08.875Z",
+            "modified": "2023-08-27T13:25:20.432Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "fb8f0bf4-e95c-4b87-92ea-9d4d6eef4497",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Revert Last Time Activity",
+            "url": "http://localhost:3000/activity/clocks/{clockId}/revert",
+            "method": "POST",
+            "sortNum": 120000,
+            "created": "2023-08-27T13:28:08.128Z",
+            "modified": "2023-08-27T13:28:26.937Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "a9a1277d-1dd3-4be1-8080-c12958a8e910",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Add Time to Clock",
+            "url": "http://localhost:3000/keyholder/clocks/{clockId}/add",
+            "method": "PUT",
+            "sortNum": 130000,
+            "created": "2023-08-27T13:29:21.650Z",
+            "modified": "2023-08-27T13:34:19.562Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"addTime\": 3600000\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "dffa2e71-9917-4543-a109-a314357894ac",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Subtract Time from Clock",
+            "url": "http://localhost:3000/keyholder/clocks/{clockId}/subtract",
+            "method": "PUT",
+            "sortNum": 150000,
+            "created": "2023-08-27T14:13:52.493Z",
+            "modified": "2023-08-27T14:16:45.293Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"subtractTime\": 3600000\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "00e7af5a-e9ce-46cd-b59c-27d1f08bd1a4",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Pause or Unpause Clock",
+            "url": "http://localhost:3000/keyholder/clocks/{clockId}/pause",
+            "method": "PUT",
+            "sortNum": 170000,
+            "created": "2023-08-27T14:18:04.440Z",
+            "modified": "2023-08-27T14:18:57.953Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "clockId",
+                    "value": "{{clockID}}",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"pause\": false\n}",
+                "form": []
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
+            "tests": []
+        }
+    ]
+}

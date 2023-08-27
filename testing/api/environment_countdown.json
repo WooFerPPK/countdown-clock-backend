@@ -1,0 +1,32 @@
+{
+    "client": "Thunder Client",
+    "environmentName": "Clocks",
+    "dateExported": "2023-08-27T19:06:43.251Z",
+    "version": "1.0",
+    "variables": [
+        {
+            "name": "clockID",
+            "value": ""
+        },
+        {
+            "name": "token",
+            "value": ""
+        },
+        {
+            "name": "password",
+            "value": "1337"
+        },
+        {
+            "name": "port",
+            "value": "4001"
+        },
+        {
+            "name": "host",
+            "value": "localhost"
+        },
+        {
+            "name": "protocal",
+            "value": "http"
+        }
+    ]
+}

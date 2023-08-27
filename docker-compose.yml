@@ -1,0 +1,23 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "4001:4001"
+    depends_on:
+      - db
+    environment:
+      - PORT=4001
+      - MONGO_URL=mongodb://db:27017/countdownDB
+      - JWT_SECRET_KEY=yourSecretKey
+      - JWT_EXPIRE_TIME=1h
+
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
