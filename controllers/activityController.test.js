@@ -10,7 +10,9 @@ jest.mock('../models/clockModel', () => ({
 }));
 
 jest.mock('../utils/errorUtils', () => ({
-  handleError: jest.fn()
+  handleError: jest.fn((error, res) => {
+    res.status(500).send({ error: 'Internal Server Error' });
+  })
 }));
 
 const app = express();
@@ -41,6 +43,16 @@ describe('Clock Activity Controller', () => {
       expect(res.statusCode).toEqual(200);
       expect(res.body).toEqual([]);
     });
+
+    it('should handle errors', async () => {
+      const mockError = new Error('An error');
+      require('../models/clockModel').getActivityLogById.mockRejectedValue(mockError);
+
+      const res = await request(app).get('/activity/clocks/1');
+
+      expect(res.statusCode).toEqual(500);
+      expect(res.body).toEqual({ error: 'Internal Server Error' });
+    });
   });
   
   describe('GET /clocks/:id/history', () => {
@@ -62,6 +74,16 @@ describe('Clock Activity Controller', () => {
       expect(res.statusCode).toEqual(200);
       expect(res.body).toEqual([]);
     });
+
+    it('should handle errors', async () => {
+      const mockError = new Error('An error');
+      require('../models/clockModel').getTimeActivitiesById.mockRejectedValue(mockError);
+
+      const res = await request(app).get('/activity/clocks/1/history');
+
+      expect(res.statusCode).toEqual(500);
+      expect(res.body).toEqual({ error: 'Internal Server Error' });
+    });
   });
   
   describe('POST /clocks/:id/revert', () => {
@@ -82,6 +104,16 @@ describe('Clock Activity Controller', () => {
       
       expect(res.statusCode).toEqual(200);
       expect(res.body).toEqual({ message: 'No time activity found to revert' });
+    });
+
+    it('should handle errors', async () => {
+      const mockError = new Error('An error');
+      require('../models/clockModel').revertLastTimeActivity.mockRejectedValue(mockError);
+
+      const res = await request(app).post('/activity/clocks/1/revert');
+
+      expect(res.statusCode).toEqual(500);
+      expect(res.body).toEqual({ error: 'Internal Server Error' });
     });
   });
 });
