@@ -55,7 +55,7 @@ router.post('/clocks/:id', async (req, res) => {
     if (!clock.passwordHash) {
       const hasPassword = await isPasswordSet(id);
       if (!hasPassword) {
-        await logActivity(id, 'Keyholder Set');
+        await logActivity(id, `${clock.username} locked the clock for exclusive control.`);
       }
 
       await setPasswordForClock(id, password);

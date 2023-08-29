@@ -4,7 +4,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const { getClockById, createClock, getAllClocks, deleteClockById } = require('../models/clockModel');
+const { getClockById, createClock, getAllClocks } = require('../models/clockModel');
 const { millisecondsToHumanReadable, calculateRemainingTime } = require('../utils/timeUtils');
 const { handleError } = require('../utils/errorUtils');
 
@@ -55,13 +55,20 @@ router.post('/', async (req, res) => {
     try {
         const endTime = new Date(parseInt(req.body.endTime, 10)).getTime();
         const description = req.body.description;
+        const username = req.body.username;
 
-        const newClock = {
+        let newClock = {
             endTime,
             description,
             remainingTime: calculateRemainingTime(endTime),
             paused: false
         };
+
+        if (username) {
+            newClock.username = username;
+        } else {
+            newClock.username = 'Keyholder';
+        }
 
         const id = await createClock(newClock);
         if (id) {
@@ -104,26 +111,6 @@ router.get('/', async (req, res) => {
     try {
         const clocks = await getAllClocks();
         res.status(200).send(clocks);
-    } catch (error) {
-        handleError(error, res);
-    }
-});
-
-/**
- * Handles DELETE request to delete a clock by its ID.
- * @route DELETE /:id
- * @param {Object} req - The Express request object.
- * @param {Object} res - The Express response object.
- */
-router.delete('/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const deletedCount = await deleteClockById(id);
-        if (deletedCount === 0) {
-            return res.status(404).send({ error: 'Clock not found' });
-        } else {
-            return res.status(200).send({ message: 'Clock deleted successfully' });
-        }
     } catch (error) {
         handleError(error, res);
     }

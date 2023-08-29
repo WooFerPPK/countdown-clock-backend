@@ -1,4 +1,5 @@
-const { getAllClocks, updateClocksInBatch } = require('../models/clockModel');
+const { getAllClocks, updateClocksInBatch, getPauseDataByClockId, deletePauseDataByClockId } = require('../models/clockModel');
+const { pushNotification, deleteNotificationById, sendPushoverNotification } = require('../models/notificationModel');
 const { calculateRemainingTime } = require('../utils/timeUtils');
 const { handleError } = require('../utils/errorUtils');
 
@@ -12,27 +13,49 @@ const batchUpdateClocks = async (updates, notifications) => {
     }
 };
 
-const checkAndUpdateRemainingTime = (clock, currentTime) => {
-    const remainingTime = calculateRemainingTime(clock.endTime, currentTime);
+const checkAndUpdateRemainingTime = async (clock, currentTime) => {
+    let endTime = new Date(clock.endTime).getTime();
+    if (!clock.paused) {
+        const pauseData = await getPauseDataByClockId(clock._id) || {};      
+        if (pauseData.pauseStartTime) {
+            const pauseDuration = currentTime - pauseData.pauseStartTime;
+            endTime = new Date(clock.endTime).getTime() + pauseDuration;
+            await deletePauseDataByClockId(clock._id)
+        }
+    }
+
+    const remainingTime = calculateRemainingTime(endTime);
+    
     if (remainingTime !== clock.remainingTime) {
         return { id: clock._id, remainingTime };
     }
+    
     return null;
 };
 
-const checkAndNotifyZeroTime = (clock, remainingTime) => {
-    if (remainingTime === 0 && !clock.notified) {
-        // Push notification code here
-        console.log(`Clock with ID ${clock._id} has run out of time`);
-        return { id: clock._id, notified: true };
+const checkAndNotifyZeroTime = async (clock, remainingTime) => {
+    if (remainingTime === 0 && !clock.notificationId) {
+        const message = `${clock.description} has no time remaining`;
+        const notificationId = await pushNotification(
+            { message: message },
+            { clockId: clock._id.toString() }
+        );
+        if (process.env.PUSHOVER_USER_KEY && process.env.PUSHOVER_API_TOKEN) {
+            await sendPushoverNotification(message);
+        }
+        return { id: clock._id, notificationId };
     }
     return null;
 };
 
-const checkAndResetNotifiedFlag = (clock, remainingTime) => {
-    if (remainingTime > 0 && clock.notified) {
-        // Reset the notified flag if time has been added back
-        return { id: clock._id, notified: false };
+const checkAndResetnotificationId = async (clock, remainingTime) => {
+    if (remainingTime > 0 && clock.notificationId) {
+
+        if (clock.notificationId) {
+            await deleteNotificationById(clock.notificationId);
+        }
+
+        return { id: clock._id, notificationId: null };
     }
     return null;
 };
@@ -40,6 +63,7 @@ const checkAndResetNotifiedFlag = (clock, remainingTime) => {
 const updateAllClocks = async () => {
     try {
         const allClocks = await getAllClocks();
+
         const activeClocks = filterActiveClocks(allClocks);
         const currentTime = new Date().getTime();
         
@@ -47,21 +71,21 @@ const updateAllClocks = async () => {
         const notifications = [];
 
         for (const clock of activeClocks) {
-            const update = checkAndUpdateRemainingTime(clock, currentTime);
+            const update = await checkAndUpdateRemainingTime(clock, currentTime);
             if (update) { 
                 updates.push(update);
             }
 
             const remainingTime = update ? update.remainingTime : clock.remainingTime;
 
-            const notify = checkAndNotifyZeroTime(clock, remainingTime);
+            const notify = await checkAndNotifyZeroTime(clock, remainingTime);
             if (notify) { 
                 notifications.push(notify);
             }
 
-            const resetNotified = checkAndResetNotifiedFlag(clock, remainingTime);
-            if (resetNotified) { 
-                notifications.push(resetNotified);
+            const resetNotification = await checkAndResetnotificationId(clock, remainingTime);
+            if (resetNotification) { 
+                notifications.push(resetNotification);
             }
         }
 

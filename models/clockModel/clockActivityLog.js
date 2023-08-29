@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const getDB = require('../dbSingleton');
+const { sendPushoverNotification } = require('../notificationModel/index');
 
 // Log an activity
 const logActivity = async (id, message) => {
@@ -10,6 +11,9 @@ const logActivity = async (id, message) => {
         { _id: new ObjectId(id) },
         { $push: { activityLog: logEntry } }
     );
+    if (process.env.PUSHOVER_USER_KEY && process.env.PUSHOVER_API_TOKEN) {
+        await sendPushoverNotification(message);
+    }
 };
 
 // Get activity log by ID

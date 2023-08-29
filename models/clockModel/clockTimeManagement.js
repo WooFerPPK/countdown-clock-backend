@@ -45,7 +45,7 @@ const revertLastTimeActivity = async (id) => {
         }
     );
 
-    await logActivity(id, `Reverted ${lastActivity.type.toLowerCase().replace('_', ' ')} of ${millisecondsToHumanReadable(lastActivity.amount)}`);
+    // await logActivity(id, `Reverted ${lastActivity.type.toLowerCase().replace('_', ' ')} of ${millisecondsToHumanReadable(lastActivity.amount)}`);
 
     return lastActivity;
 };

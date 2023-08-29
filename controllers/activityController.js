@@ -4,7 +4,7 @@
  */
 const express = require('express');
 const router = express.Router();
-const { getActivityLogById, getTimeActivitiesById, revertLastTimeActivity } = require('../models/clockModel');
+const { getActivityLogById, getTimeActivitiesById } = require('../models/clockModel');
 const { handleError } = require('../utils/errorUtils');
 
 /**
@@ -46,28 +46,6 @@ router.get('/clocks/:id/history', async (req, res) => {
     }
 
     res.status(200).send(timeActivities);
-  } catch (error) {
-    handleError(error, res);
-  }
-});
-
-/**
- * Revert the last time activity for a clock by ID.
- * @route POST /clocks/:id/revert
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @returns {Object} 200 - Object with message indicating success or failure
- */
-router.post('/clocks/:id/revert', async (req, res) => {
-  try {    
-    const id = req.params.id;
-    const revertedActivity = await revertLastTimeActivity(id);
-
-    if (!revertedActivity) {
-        return res.status(200).send({ message:'No time activity found to revert'});
-    }
-
-    res.status(200).send({ message: `Successfully reverted last time activity: ${revertedActivity.type} of ${revertedActivity.amount} milliseconds` });
   } catch (error) {
     handleError(error, res);
   }

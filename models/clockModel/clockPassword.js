@@ -3,7 +3,7 @@ const { ObjectId } = require('mongodb');
 const { updateClockById } = require('./clockCrud');
 const getDB = require('../dbSingleton');
 
-const setPasswordForClock = async (id, password) => {
+const setPasswordForClock = async (id, password, name) => {
     try {
         if (typeof password !== 'string') {
             throw new Error('Invalid input: password must be a string');

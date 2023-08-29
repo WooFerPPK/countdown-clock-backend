@@ -6,6 +6,7 @@ const { ObjectId } = require('mongodb');
 const getDB = require('../dbSingleton');
 const { calculateRemainingTime } = require('../../utils/timeUtils');
 const { updateClocksInBatch } = require('./clockBatchUpdates');
+const clockModel = require('.');
 
 const commonProjection = { passwordHash: 0, activityLog: 0, timeActivities: 0 };
 
@@ -33,6 +34,9 @@ const getClockById = async (id) => {
     }
 
     const currentTime = new Date().getTime();
+    if (!clock.endTime) {
+      clock.endTime = currentTime;
+    }
     let newRemainingTime = calculateRemainingTime(clock.endTime, currentTime);
 
     if (!clock.paused) {
@@ -89,6 +93,9 @@ const getAllClocks = async () => {
 
   for (const clock of clocks) {
     if (!clock.paused) {
+      if (!clock.endTime) {
+        clock.endTime = currentTime;
+      }
       let newRemainingTime = calculateRemainingTime(clock.endTime, currentTime);
       newRemainingTime = Math.max(newRemainingTime, 0);
 

@@ -86,34 +86,35 @@ describe('Clock Activity Controller', () => {
     });
   });
   
-  describe('POST /clocks/:id/revert', () => {
-    it('should revert last time activity when it exists', async () => {
-      const mockRevertedActivity = { type: 'add', amount: 1000 };
-      require('../models/clockModel').revertLastTimeActivity.mockResolvedValue(mockRevertedActivity);
+  // Needs to move
+  // describe('POST /clocks/:id/revert', () => {
+  //   it('should revert last time activity when it exists', async () => {
+  //     const mockRevertedActivity = { type: 'add', amount: 1000 };
+  //     require('../models/clockModel').revertLastTimeActivity.mockResolvedValue(mockRevertedActivity);
       
-      const res = await request(app).post('/activity/clocks/1/revert');
+  //     const res = await request(app).post('/activity/clocks/1/revert');
       
-      expect(res.statusCode).toEqual(200);
-      expect(res.body).toEqual({ message: `Successfully reverted last time activity: ${mockRevertedActivity.type} of ${mockRevertedActivity.amount} milliseconds` });
-    });
+  //     expect(res.statusCode).toEqual(200);
+  //     expect(res.body).toEqual({ message: `Successfully reverted last time activity: ${mockRevertedActivity.type} of ${mockRevertedActivity.amount} milliseconds` });
+  //   });
     
-    it('should return a message when no time activity is found to revert', async () => {
-      require('../models/clockModel').revertLastTimeActivity.mockResolvedValue(null);
+  //   it('should return a message when no time activity is found to revert', async () => {
+  //     require('../models/clockModel').revertLastTimeActivity.mockResolvedValue(null);
       
-      const res = await request(app).post('/activity/clocks/1/revert');
+  //     const res = await request(app).post('/activity/clocks/1/revert');
       
-      expect(res.statusCode).toEqual(200);
-      expect(res.body).toEqual({ message: 'No time activity found to revert' });
-    });
+  //     expect(res.statusCode).toEqual(200);
+  //     expect(res.body).toEqual({ message: 'No time activity found to revert' });
+  //   });
 
-    it('should handle errors', async () => {
-      const mockError = new Error('An error');
-      require('../models/clockModel').revertLastTimeActivity.mockRejectedValue(mockError);
+  //   it('should handle errors', async () => {
+  //     const mockError = new Error('An error');
+  //     require('../models/clockModel').revertLastTimeActivity.mockRejectedValue(mockError);
 
-      const res = await request(app).post('/activity/clocks/1/revert');
+  //     const res = await request(app).post('/activity/clocks/1/revert');
 
-      expect(res.statusCode).toEqual(500);
-      expect(res.body).toEqual({ error: 'Internal Server Error' });
-    });
-  });
+  //     expect(res.statusCode).toEqual(500);
+  //     expect(res.body).toEqual({ error: 'Internal Server Error' });
+  //   });
+  // });
 });

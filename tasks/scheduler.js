@@ -5,7 +5,7 @@ let updateAllClocksIntervalID;
 const startAll = () => {
   updateAllClocksIntervalID = setInterval(async () => {
     await updateAllClocks();
-  }, 60000);
+  }, 6000);
 };
 
 const stopAll = () => {
