@@ -6,7 +6,8 @@ const { ObjectId } = require('mongodb');
 const getDB = require('../dbSingleton');
 const { calculateRemainingTime } = require('../../utils/timeUtils');
 const { updateClocksInBatch } = require('./clockBatchUpdates');
-const clockModel = require('.');
+const { setPasswordForClock } = require('./clockPassword');
+const { logActivity } = require('./clockActivityLog');
 
 const commonProjection = { passwordHash: 0, activityLog: 0, timeActivities: 0 };
 
@@ -57,11 +58,23 @@ const getClockById = async (id) => {
 
     return updatedClock;
 
-  } catch (err) {
-    console.error(`Error in getClockById: ${err}`);
-    throw err;
+  } catch (error) {
+    console.error(`Error in getClockById: ${error}`);
+    throw error;
   }
 };
+
+const getClockByIdAll = async (id) => {
+  try {
+    const db = await getDB();
+    const clock = await db.collection('clocks').findOne({ _id: getObjectId(id) });
+    return clock;
+  } catch (error) {
+    console.error(`Error in getClockById: ${error}`);
+    throw error;
+  }
+};
+
 
 /**
  * Creates a new clock in the database.
@@ -69,10 +82,22 @@ const getClockById = async (id) => {
  * @param {Object} clockData - The data for the new clock.
  * @returns {ObjectId} - The ID of the inserted clock.
  */
-const createClock = async (clockData) => {
-  const db = await getDB();
-  const result = await db.collection('clocks').insertOne(clockData);
-  return result.insertedId;
+const createClock = async (clockData, password) => {
+  try {
+    if (!password) {
+      throw "Password Required";
+    }
+    const db = await getDB();
+    const { passwordHash } = await setPasswordForClock(password);
+    clockData = {...clockData, passwordHash }
+    const result = await db.collection('clocks').insertOne(clockData);
+    
+    await logActivity(result.insertedId.toHexString(), `${clockData.username} locked the clock for exclusive control.`);
+
+    return result.insertedId;
+  } catch (error) {
+    throw error;
+  }
 };
 
 /**
@@ -153,6 +178,7 @@ const deleteClockById = async (id) => {
 
 module.exports = {
   getClockById,
+  getClockByIdAll,
   createClock,
   getAllClocks,
   updateClockById,

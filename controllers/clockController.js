@@ -56,6 +56,7 @@ router.post('/', async (req, res) => {
         const endTime = new Date(parseInt(req.body.endTime, 10)).getTime();
         const description = req.body.description;
         const username = req.body.username;
+        const password = req.body.password;
 
         let newClock = {
             endTime,
@@ -70,7 +71,7 @@ router.post('/', async (req, res) => {
             newClock.username = 'Keyholder';
         }
 
-        const id = await createClock(newClock);
+        const id = await createClock(newClock, password);
         if (id) {
             return res.status(201).send({ id });
         } else {

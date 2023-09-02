@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Countdown",
-    "dateExported": "2023-08-27T19:06:22.831Z",
+    "dateExported": "2023-09-01T11:54:14.801Z",
     "version": "1.1",
     "folders": [],
     "requests": [
@@ -28,12 +28,12 @@
             "method": "POST",
             "sortNum": 15000,
             "created": "2023-08-27T12:43:53.605Z",
-            "modified": "2023-08-27T19:04:45.831Z",
+            "modified": "2023-08-28T20:25:22.411Z",
             "headers": [],
             "params": [],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"endTime\": 1,\n  \"description\": \"Hello World\"\n}",
+                "raw": "{\n  \"endTime\": 1693251012861,\n  \"description\": \"Test Clock\",\n  \"username\": \"The Queen\"\n}",
                 "form": []
             },
             "tests": []
@@ -43,11 +43,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Get Clock By Id",
-            "url": "http://localhost:3000/clocks/{clockId}",
+            "url": "{{protocal}}://{{host}}:{{port}}/clocks/{clockId}",
             "method": "GET",
             "sortNum": 20000,
             "created": "2023-08-27T12:38:36.507Z",
-            "modified": "2023-08-27T15:30:33.048Z",
+            "modified": "2023-08-27T21:00:01.468Z",
             "headers": [],
             "params": [
                 {
@@ -63,11 +63,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Delete Clock By ID",
-            "url": "http://localhost:3000/clocks/{clockIdToDelete}",
+            "url": "{{protocal}}://{{host}}:{{port}}/keyholder/clocks/{clockIdToDelete}",
             "method": "DELETE",
             "sortNum": 40000,
             "created": "2023-08-27T12:48:57.841Z",
-            "modified": "2023-08-27T15:06:00.304Z",
+            "modified": "2023-08-28T13:05:03.601Z",
             "headers": [],
             "params": [
                 {
@@ -76,6 +76,10 @@
                     "isPath": true
                 }
             ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
             "tests": []
         },
         {
@@ -83,11 +87,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Authenticate Clock",
-            "url": "http://localhost:3000/auth/clocks/{clockId}",
+            "url": "{{protocal}}://{{host}}:{{port}}/auth/clocks/{clockId}",
             "method": "POST",
             "sortNum": 60000,
             "created": "2023-08-27T12:56:02.064Z",
-            "modified": "2023-08-27T15:00:46.492Z",
+            "modified": "2023-08-27T21:00:07.093Z",
             "headers": [],
             "params": [
                 {
@@ -108,11 +112,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Check if Clock Has Password",
-            "url": "http://localhost:3000/auth/clocks/{clockId}/has-password",
+            "url": "{{protocal}}://{{host}}:{{port}}/auth/clocks/{clockId}/has-password",
             "method": "GET",
             "sortNum": 70000,
             "created": "2023-08-27T13:07:29.113Z",
-            "modified": "2023-08-27T13:20:10.856Z",
+            "modified": "2023-08-27T21:00:09.997Z",
             "headers": [],
             "params": [
                 {
@@ -128,11 +132,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Verify Clock Token",
-            "url": "http://localhost:3000/auth/verify-clock-token",
+            "url": "{{protocal}}://{{host}}:{{port}}/auth/verify-clock-token",
             "method": "POST",
             "sortNum": 80000,
             "created": "2023-08-27T13:20:32.042Z",
-            "modified": "2023-08-27T13:22:36.859Z",
+            "modified": "2023-08-27T21:00:13.525Z",
             "headers": [],
             "params": [],
             "body": {
@@ -147,11 +151,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Get Activity Log",
-            "url": "http://localhost:3000/activity/clocks/{clockId}",
+            "url": "{{protocal}}://{{host}}:{{port}}/activity/clocks/{clockId}",
             "method": "GET",
             "sortNum": 100000,
             "created": "2023-08-27T13:23:21.742Z",
-            "modified": "2023-08-27T13:23:40.754Z",
+            "modified": "2023-08-27T20:30:19.506Z",
             "headers": [],
             "params": [
                 {
@@ -167,11 +171,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Get Time Activities History",
-            "url": "http://localhost:3000/activity/clocks/{clockId}/history",
+            "url": "{{protocal}}://{{host}}:{{port}}/activity/clocks/{clockId}/history",
             "method": "GET",
             "sortNum": 110000,
             "created": "2023-08-27T13:24:08.875Z",
-            "modified": "2023-08-27T13:25:20.432Z",
+            "modified": "2023-08-27T21:00:49.314Z",
             "headers": [],
             "params": [
                 {
@@ -187,11 +191,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Revert Last Time Activity",
-            "url": "http://localhost:3000/activity/clocks/{clockId}/revert",
+            "url": "{{protocal}}://{{host}}:{{port}}/keyholder/clocks/{clockId}/revert",
             "method": "POST",
             "sortNum": 120000,
             "created": "2023-08-27T13:28:08.128Z",
-            "modified": "2023-08-27T13:28:26.937Z",
+            "modified": "2023-08-29T09:15:47.775Z",
             "headers": [],
             "params": [
                 {
@@ -200,6 +204,10 @@
                     "isPath": true
                 }
             ],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{token}}"
+            },
             "tests": []
         },
         {
@@ -207,11 +215,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Add Time to Clock",
-            "url": "http://localhost:3000/keyholder/clocks/{clockId}/add",
+            "url": "{{protocal}}://{{host}}:{{port}}/keyholder/clocks/{clockId}/add",
             "method": "PUT",
             "sortNum": 130000,
             "created": "2023-08-27T13:29:21.650Z",
-            "modified": "2023-08-27T13:34:19.562Z",
+            "modified": "2023-08-28T20:01:09.874Z",
             "headers": [],
             "params": [
                 {
@@ -222,7 +230,7 @@
             ],
             "body": {
                 "type": "json",
-                "raw": "{\n  \"addTime\": 3600000\n}",
+                "raw": "{\n  \"addTime\": 360000\n}",
                 "form": []
             },
             "auth": {
@@ -236,11 +244,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Subtract Time from Clock",
-            "url": "http://localhost:3000/keyholder/clocks/{clockId}/subtract",
+            "url": "{{protocal}}://{{host}}:{{port}}/keyholder/clocks/{clockId}/subtract",
             "method": "PUT",
             "sortNum": 150000,
             "created": "2023-08-27T14:13:52.493Z",
-            "modified": "2023-08-27T14:16:45.293Z",
+            "modified": "2023-08-28T10:50:07.307Z",
             "headers": [],
             "params": [
                 {
@@ -265,11 +273,11 @@
             "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
             "containerId": "",
             "name": "Pause or Unpause Clock",
-            "url": "http://localhost:3000/keyholder/clocks/{clockId}/pause",
+            "url": "{{protocal}}://{{host}}:{{port}}/keyholder/clocks/{clockId}/pause",
             "method": "PUT",
             "sortNum": 170000,
             "created": "2023-08-27T14:18:04.440Z",
-            "modified": "2023-08-27T14:18:57.953Z",
+            "modified": "2023-08-29T08:02:39.899Z",
             "headers": [],
             "params": [
                 {
@@ -287,6 +295,59 @@
                 "type": "bearer",
                 "bearer": "{{token}}"
             },
+            "tests": []
+        },
+        {
+            "_id": "41e99987-8cc7-4ca8-88d4-84aae0ae7c89",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Push a New Notification",
+            "url": "{{protocal}}://{{host}}:{{port}}/notifications",
+            "method": "POST",
+            "sortNum": 190000,
+            "created": "2023-08-28T10:50:34.765Z",
+            "modified": "2023-08-28T10:58:17.519Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"message\": \"Hello World\",\n    \"metadata\": {\n      \"clockId\": 1234\n    }\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f6d35d58-73f3-4cc2-8450-366e111cd28d",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Get All Notifications",
+            "url": "{{protocal}}://{{host}}:{{port}}/notifications",
+            "method": "GET",
+            "sortNum": 200000,
+            "created": "2023-08-28T10:56:39.622Z",
+            "modified": "2023-08-28T10:56:53.016Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "32a1b9c0-dbdb-4187-9ddf-fac39171251e",
+            "colId": "fdcdf73d-e12b-44e2-9a0d-966a04cf21a4",
+            "containerId": "",
+            "name": "Delete Notification by ID",
+            "url": "{{protocal}}://{{host}}:{{port}}/notifications/{notificationID}",
+            "method": "DELETE",
+            "sortNum": 210000,
+            "created": "2023-08-28T10:57:17.900Z",
+            "modified": "2023-08-28T12:26:31.973Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "notificationID",
+                    "value": "64ec7dc98d603a833bde5b6d",
+                    "isPath": true
+                }
+            ],
             "tests": []
         }
     ]

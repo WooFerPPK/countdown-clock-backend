@@ -11,8 +11,8 @@ services:
       - MONGO_URL=mongodb://db:27017/countdownClockDB
       - JWT_SECRET_KEY=yourSecretKey
       - JWT_EXPIRE_TIME=1h
-      - PUSHOVER_USER_KEY=
-      - PUSHOVER_API_TOKEN=
+      - PUSHOVER_USER_KEY=uyzqZ8LoAuJv8BRdZLi83hspzynrZc
+      - PUSHOVER_API_TOKEN=avsj9fx9k9uwkgxh5fp6jeitd7vup9
   db:
     image: mongo:latest
     ports:

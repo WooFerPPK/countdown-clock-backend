@@ -6,7 +6,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { getClockById, setPasswordForClock, isPasswordSet, logActivity } = require('../models/clockModel');
+const { getClockByIdAll, setPasswordForClock, isPasswordSet, logActivity } = require('../models/clockModel');
 const { handleError } = require('../utils/errorUtils');
 
 /**
@@ -17,16 +17,18 @@ const { handleError } = require('../utils/errorUtils');
  */
 const fetchAndValidateClock = async (id, password) => {
   try {
-    const clock = await getClockById(id);
+    const clock = await getClockByIdAll(id);
     if (!clock) {
       return [null, 404, 'Clock not found'];
     }
   
-    if (clock.passwordHash) {
-      const match = await bcrypt.compare(password, clock.passwordHash);
-      if (!match) {
-        return [null, 401, 'Invalid password'];
-      }
+    if (!clock.passwordHash) {
+      return [null, 401, 'Invalid password'];
+    }
+
+    const match = await bcrypt.compare(password, clock.passwordHash);
+    if (!match) {
+      return [null, 401, 'Invalid password'];
     }
 
     return [clock, null, null];
@@ -52,14 +54,14 @@ router.post('/clocks/:id', async (req, res) => {
       return res.status(statusCode).send({ message: errMsg });
     }
 
-    if (!clock.passwordHash) {
-      const hasPassword = await isPasswordSet(id);
-      if (!hasPassword) {
-        await logActivity(id, `${clock.username} locked the clock for exclusive control.`);
-      }
+    // if (!clock.passwordHash) {
+    //   const hasPassword = await isPasswordSet(id);
+    //   if (!hasPassword) {
+    //     await logActivity(id, `${clock.username} locked the clock for exclusive control.`);
+    //   }
 
-      await setPasswordForClock(id, password);
-    }
+    //   await setPasswordForClock(id, password);
+    // }
 
     const token = jwt.sign({ clockId: id }, process.env.JWT_SECRET_KEY, { expiresIn: process.env.JWT_EXPIRE_TIME });
     res.status(200).send({ token, message: 'Authenticated successfully' });

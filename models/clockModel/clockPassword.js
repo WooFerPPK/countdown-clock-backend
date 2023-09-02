@@ -1,17 +1,17 @@
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
-const { updateClockById } = require('./clockCrud');
 const getDB = require('../dbSingleton');
 
-const setPasswordForClock = async (id, password, name) => {
+const setPasswordForClock = async (password) => {
     try {
         if (typeof password !== 'string') {
-            throw new Error('Invalid input: password must be a string');
+            throw 'Invalid input: password must be a string';
         }
-
         const passwordHash = await bcrypt.hash(password, 10);
-        return await updateClockById(id, { passwordHash });
+        return { passwordHash };
+        // return await updateClockById(id, { passwordHash });
     } catch (error) {
+        console.log(error);
         throw error;
     }
 };
